@@ -1,24 +1,57 @@
-<div class="contain">
-	<div class="congrats">
-		<h1>Congrat<span class="hide">ulation</span>s !</h1>
-		<div class="done">
-			<svg version="1.1" id="tick" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 37 37" style="enable-background:new 0 0 37 37;" xml:space="preserve">
-<path class="circ path" style="fill:#0cdcc7;stroke:#07a796;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10;" d="
-	M30.5,6.5L30.5,6.5c6.6,6.6,6.6,17.4,0,24l0,0c-6.6,6.6-17.4,6.6-24,0l0,0c-6.6-6.6-6.6-17.4,0-24l0,0C13.1-0.2,23.9-0.2,30.5,6.5z"
-	/>
-<polyline class="tick path" style="fill:none;stroke:#fff;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10;" points="
-	11.6,20 15.9,24.2 26.4,13.8 "/>
-</svg>
-			</div>
-		<div class="text">
-		<p>You have successfully booked an appointment with us. <br>Here are your details<br>Date: 12.12.12<br>
-			Time: 11am<br>
-			ID: 12324
-		</p>
-			<p>Eagerly awaiting your visit
-			</p>
-			</div>
-		<p class="regards">Regards, BHARATH SR</p>
-	</div>
-</div>
+// Click "Congratulations!" to play animation
+$(function() {
+	var numberOfStars = 20;
+	for (var i = 0; i < numberOfStars; i++) {
+	  $('.congrats').append('<div class="blob fa fa-star ' + i + '"></div>');
+	}	
+	animateText();
+	animateBlobs();
+});
+$('.congrats').click(function() {
+	reset();
+	animateText();
+	animateBlobs();
+});
+function reset() {
+	$.each($('.blob'), function(i) {
+		TweenMax.set($(this), { x: 0, y: 0, opacity: 1 });
+	});
+	TweenMax.set($('h1'), { scale: 1, opacity: 1, rotation: 0 });
+}
+function animateText() {
+		TweenMax.from($('.congrats h1'), 0.8, {
+		scale: 0.4,
+		opacity: 0,
+		rotation: 15,
+		ease: Back.easeOut.config(4),
+	});
+}
+function animateBlobs() {
+	
+	var xSeed = _.random(350, 380);
+	var ySeed = _.random(120, 170);
+	$.each($('.blob'), function(i) {
+		var $blob = $(this);
+		var speed = _.random(1, 5);
+		var rotation = _.random(5, 100);
+		var scale = _.random(0.8, 1.5);
+		var x = _.random(-xSeed, xSeed);
+		var y = _.random(-ySeed, ySeed);
+		TweenMax.to($blob, speed, {
+			x: x,
+			y: y,
+			ease: Power1.easeOut,
+			opacity: 0,
+			rotation: rotation,
+			scale: scale,
+			onStartParams: [$blob],
+			onStart: function($element) {
+				$element.css('display', 'block');
+			},
+			onCompleteParams: [$blob],
+			onComplete: function($element) {
+				$element.css('display', 'none');
+			}
+		});
+	});
+}
