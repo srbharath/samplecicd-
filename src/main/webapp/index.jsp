@@ -21,6 +21,6 @@
     <p id='message'>
       Congratulations, YOUR SAMPLE CICD PIPELINE IS SUCESSFULLY DONE.
     </p>
-    <a href="#" id="contBtn">Continue</a>
+    <a href="#" id="contBtn"></a>
   </div>
 </div>
